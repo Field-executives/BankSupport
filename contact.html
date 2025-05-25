@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Field executives </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(rgba(42, 43, 44, 0.8), rgba(41, 55, 55, 0.9)), url('https://images.unsplash.com/photo-1573164713988-8665fc963095') no-repeat center center/cover;
+      color: #f0f0f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #121212cc;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #4dd0e1;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+      transition: all 0.3s ease;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #4dd0e1;
+      transition: 0.4s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #1e1e1ecc;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+      border-radius: 0 0 10px 10px;
+      animation: slideIn 0.4s ease forwards;
+    }
+
+    .mobile-menu a {
+      padding: 10px 20px;
+      border-bottom: 1px solid #333;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    main {
+      padding-top: 100px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      animation: fadeInDown 1s ease-in-out;
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      background: #4dd0e1;
+      border: none;
+      border-radius: 30px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #06b7d2;
+    }
+
+    .search-section {
+      margin: 40px auto;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .search-section input {
+      width: 100%;
+      padding: 15px 50px;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      font-size: 1em;
+    }
+
+    .search-section i.clear {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+      cursor: pointer;
+    }
+
+    .search-section i.search {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+    }
+
+    .suggestions {
+      background: #222;
+      border-radius: 10px;
+      margin-top: 10px;
+      padding: 10px;
+      display: none;
+      text-align: left;
+    }
+
+    .suggestions div {
+      padding: 5px;
+      cursor: pointer;
+      border-bottom: 1px solid #333;
+    }
+
+    .suggestions div:hover {
+      background: #04afd5;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: #1e1e1ecc;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px #039ba9;
+    }
+
+    .card img {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+
+    .objective {
+      padding: 40px 20px;
+      text-align: center;
+      background: #121212cc;
+    }
+
+    .objective p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.2em;
+      animation: fadeIn 1s ease-in;
+    }
+
+    footer {
+      background: #111;
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      color: #ccc;
+      font-size: 0.9em;
+    }
+
+    .social i {
+      margin-right: 15px;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    .social i:hover {
+      color: #4dd0e1;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .mobile-menu {
+        display: flex;
+      }
+    }
+
+    /*style*/
+    .search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+}
+
+.search-box {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 2.5rem; /* Left & Right space for icons */
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.icon-left, .icon-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #555;
+    z-index: 2;
+}
+
+.icon-left {
+    left: 10px;
+    cursor: pointer;
+}
+
+.icon-right {
+    right: 10px;
+}
+
+.suggestions {
+    background: #fff;
+    color: #000;
+    position: absolute;
+    top: 110%;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.mobile-nav a {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.mobile-nav a:hover {
+    background: #00bcd4;
+    color: #000;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .mobile-nav.show {
+        display: flex;
+        animation: slideDown 0.3s ease forwards;
+    }
+
+    .mobile-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+/*contact style*/
+ .contact-section {
+      background: #111;
+      padding: 80px 20px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-section::before {
+      content: "";
+      background: url('https://images.unsplash.com/photo-1605902711622-cfb43c4437d1?auto=format&fit=crop&w=1350&q=80');
+      background-size: cover;
+      background-position: center;
+      opacity: 0.08;
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      z-index: 0;
+    }
+
+    .contact-header h2 {
+      font-size: 2.7em;
+      margin-bottom: 10px;
+      z-index: 1;
+      position: relative;
+    }
+
+    .contact-header p {
+      font-size: 1.1em;
+      color: #ccc;
+      margin-bottom: 50px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-methods {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .contact-card {
+      background: #1c1c1c;
+      border-radius: 14px;
+      padding: 30px 25px;
+      width: 300px;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 255, 255, 0.1);
+      text-align: center;
+    }
+
+    .contact-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 8px 25px rgba(0, 255, 255, 0.2);
+    }
+
+    .contact-card i {
+      font-size: 2.8em;
+      color: #00e5ff;
+      margin-bottom: 20px;
+      animation: bounce 2.5s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    .contact-card h3 {
+      font-size: 1.4em;
+      margin-bottom: 10px;
+    }
+
+    .contact-card p {
+      font-size: 1em;
+      color: #aaa;
+      margin-bottom: 10px;
+    }
+
+    .contact-card span {
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    .contact-card button {
+      margin-top: 15px;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background-color: #00e5ff;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .contact-card button:hover {
+      background-color: #00ffe0;
+    }
+
+    .feedback-msg {
+      margin-top: 25px;
+      font-size: 1em;
+      color: #00ff88;
+      opacity: 0;
+      transition: opacity 0.4s ease;
+    }
+
+    @media (max-width: 768px) {
+      .contact-methods {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">BankSupport</div>
+    <nav id="navbar">
+      <a href="index.html">Home</a>
+      <a href="file.html">File a Query</a>
+      <a href="query.html">Common Queries</a>
+      <a href="contact.html">Contact us</a>
+    </nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div id="mobileMenu" class="mobile-menu"></div>
+  </header>
+
+  <main>
+    <div class="contact-header">
+      <h2>Get in Touch with Us</h2>
+      <p>Have a unique query? Reach out directly.</p>
+    </div>
+    <div class="search-section">
+     
+      <input type="text" id="searchInput" placeholder="Make your doubt clear by typing...." oninput="showSuggestions()" />
+      
+      <div class="suggestions" id="suggestionsBox"></div>
+    </div>
+ 
+  <section id="contact" class="contact-section">
+
+    <div class="contact-methods">
+      <!-- Email Card -->
+      <div class="contact-card">
+        <i class="fas fa-envelope"></i>
+        <h3>Email Us</h3>
+        <p>helpdeskbcf@gmail.com</p>
+        <span>Available 24x7 (get replied with in 24 hours)</span>
+        <br>
+        <button onclick="sendMail()">Email</button>
+      </div>
+
+      <!-- Call Card -->
+      <div class="contact-card">
+        <i class="fas fa-phone-alt"></i>
+        <h3>Call Us</h3>
+        <p>+91 81788 24560</p>
+        <span>Available 10:00 AM – 6:00 PM (Mon–Sat)</span>
+        <br>
+        <a href="tel:+919876543210">
+        <button>Call Now</button>
+      </a>
+      </div>
+    </div>
+
+    <div class="feedback-msg" id="feedbackMsg"></div>
+  </section>
+  <footer>
+    <div>© 2025 BankSupport</div>
+    <h3>A great initiative by Busibess corresondent and facilitator's</h3>
+    <div class="social">
+      <i class=""></i>
+    </div>
+  </footer>
+</main>
+  <script>
+const suggestions = ["loans", "common query", "KYC", "ATM",
+"file query", "file a query", "Netbanking", "net banking", "accounts",
+"Submit a query", "Ask a question", "Raise a concern", "Get help", "Submit issue", "File complaint", "Need support",
+"Register query", "Contact support", "Report issue", "I want to file a query", "How to ask a question?", "Submit my banking issue",
+"Need to file a query", "Where can i ask my query?", "Raise banking question", "Resolve my issue",
+"Loan query form", "Account problem form", "I need help", "Form to submit query", "I want to complain", "Support form",
+"Government scheme", "Debit cards"];
+
+function clearSearch() {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("suggestionsBox").style.display = "none";
+}
+
+function showSuggestions() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const box = document.getElementById("suggestionsBox");
+  if (!input) {
+    box.style.display = "none";
+    return;
+  }
+
+  const matches = suggestions.filter(item => item.toLowerCase().includes(input));
+
+  if (matches.length === 0) {
+    box.innerHTML = `<div class="no-result">No result found</div>`;
+  } else {
+    box.innerHTML = matches.map(m => `<div onclick="scrollToQuery('${m}')">${m}</div>`).join("");
+  }
+
+  box.style.display = "block";
+}
+
+function scrollToQuery(term) {
+  const queryLinks = {
+    "file query": "file.html",
+    "file a query": "file.html",
+    "submit a query": "file.html",
+    "ask a question": "file.html",
+    "raise a concern": "file.html",
+    "get help": "file.html",
+    "submit issue": "file.html",
+    "file complaint": "file.html",
+    "need support": "file.html",
+    "register query": "file.html",
+    "contact support": "file.html",
+    "report issue": "file.html",
+    "i want to file a query": "file.html",
+    "how to ask a question?": "file.html",
+    "submit my banking issue": "file.html",
+    "need to file a query": "file.html",
+    "where can i ask my query?": "file.html",
+    "raise banking question": "file.html",
+    "resolve my issue": "file.html",
+    "loan query form": "file.html",
+    "account problem form": "file.html",
+    "i need help": "file.html",
+    "form to submit query": "file.html",
+    "i want to complain": "file.html",
+    "support form": "file.html",
+    "common query":"query.html",
+    "kyc": "query.html?category=kyc",
+    "accounts": "query.html?category=accounts",
+    "debit cards": "query.html?category=atm",
+    "government scheme": "query.html?category=govt",
+    "loans": "query.html?category=loans",
+    "atm": "query.html?category=atm",
+    "netbanking": "query.html?category=netbanking",
+    
+
+  };
+
+  const target = queryLinks[term.toLowerCase()];
+  if (target) {
+    window.location.href = target;
+  } else {
+    alert("No matching query section found.");
+  }
+
+  clearSearch();
+}
+
+// ✅ Add this to support Enter key press
+document.getElementById("searchInput").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    const input = this.value.trim().toLowerCase();
+    const matched = suggestions.find(item => item.toLowerCase() === input);
+    
+    if (matched) {
+      scrollToQuery(matched);
+    } else {
+      const box = document.getElementById("suggestionsBox");
+      box.innerHTML = `<div class="no-result">No result found</div>`;
+      box.style.display = "block";
+    }
+  }
+});
+
+function toggleMenu() {
+  const menu = document.getElementById("mobileMenu");
+  if (menu.innerHTML === "") {
+    menu.innerHTML = `
+      <a href="index.html">Home</a>
+      <a href="file.html">File a Query</a>
+      <a href="query.html">Common Queries</a>
+      <a href="contact.html">Contact</a>`
+      ;
+  } else {
+    menu.innerHTML = "";
+  }
+}
+//contact script
+function sendMail() {
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const mailtoLink = "mailto:helpdeskbcf@gmail.com";
+
+    if (isMobile) {
+      window.location.href = mailtoLink;
+    } else {
+      // Open Gmail in browser (desktop) as fallback
+      const gmailURL = "https://mail.google.com/mail/?view=cm&fs=1&to=helpdeskbcf@gmail.com";
+      window.open(gmailURL, "_blank");
+    }
+  }
+
+  </script>
+</body>
+</html>

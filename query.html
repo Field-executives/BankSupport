@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Field executives </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(rgba(42, 43, 44, 0.8), rgba(41, 55, 55, 0.9)), url('https://images.unsplash.com/photo-1573164713988-8665fc963095') no-repeat center center/cover;
+      color: #f0f0f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #121212cc;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #4dd0e1;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+      transition: all 0.3s ease;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #4dd0e1;
+      transition: 0.4s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #1e1e1ecc;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+      border-radius: 0 0 10px 10px;
+      animation: slideIn 0.4s ease forwards;
+    }
+
+    .mobile-menu a {
+      padding: 10px 20px;
+      border-bottom: 1px solid #333;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    main {
+      padding-top: 100px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      animation: fadeInDown 1s ease-in-out;
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      background: #4dd0e1;
+      border: none;
+      border-radius: 30px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #06b7d2;
+    }
+
+    .search-section {
+      margin: 40px auto;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .search-section input {
+      width: 100%;
+      padding: 15px 50px;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      font-size: 1em;
+    }
+
+    .search-section i.clear {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+      cursor: pointer;
+    }
+
+    .search-section i.search {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+    }
+
+    .suggestions {
+      background: #222;
+      border-radius: 10px;
+      margin-top: 10px;
+      padding: 10px;
+      display: none;
+      text-align: left;
+    }
+
+    .suggestions div {
+      padding: 5px;
+      cursor: pointer;
+      border-bottom: 1px solid #333;
+    }
+
+    .suggestions div:hover {
+      background: #04afd5;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: #1e1e1ecc;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px #039ba9;
+    }
+
+    .card img {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+
+    .objective {
+      padding: 40px 20px;
+      text-align: center;
+      background: #121212cc;
+    }
+
+    .objective p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.2em;
+      animation: fadeIn 1s ease-in;
+    }
+
+    footer {
+      background: #111;
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      color: #ccc;
+      font-size: 0.9em;
+    }
+
+    .social i {
+      margin-right: 15px;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    .social i:hover {
+      color: #4dd0e1;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .mobile-menu {
+        display: flex;
+      }
+    }
+
+    /*style*/
+    .search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+}
+
+.search-box {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 2.5rem; /* Left & Right space for icons */
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.icon-left, .icon-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #555;
+    z-index: 2;
+}
+
+.icon-left {
+    left: 10px;
+    cursor: pointer;
+}
+
+.icon-right {
+    right: 10px;
+}
+
+.suggestions {
+    background: #fff;
+    color: #000;
+    position: absolute;
+    top: 110%;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.mobile-nav a {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.mobile-nav a:hover {
+    background: #00bcd4;
+    color: #000;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .mobile-nav.show {
+        display: flex;
+        animation: slideDown 0.3s ease forwards;
+    }
+
+    .mobile-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+/*Form styel */
+
+/* Reset + Body */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+   
+
+    /* Categories */
+    .categories {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  padding: 10px 15px;
+  margin-bottom: 30px;
+}
+    .categories button {
+      background: transparent;
+      border: 1px solid #00ffe0;
+      padding: 10px 20px;
+      color: #00ffe0;
+      border-radius: 20px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .categories button:hover, .categories button.active {
+      background: #00ffe0;
+      color: #000;
+    }
+
+    /* Card Grid */
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      padding: 0 20px 50px;
+    }
+
+    .query-card {
+      background: rgba(255, 255, 255, 0.06);
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0, 255, 224, 0.2);
+      padding: 20px;
+      backdrop-filter: blur(10px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      position: relative;
+    }
+
+    .query-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 25px rgba(0, 255, 224, 0.4);
+    }
+
+    .query-card h3 { margin-bottom: 10px; }
+    .query-card p { color: #ccc; font-size: 0.95em; }
+    .query-card button {
+      margin-top: 10px;
+      padding: 6px 15px;
+      background: #00ffe0;
+      color: #000;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.8);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .modal {
+      background: #222;
+      padding: 20px;
+      border-radius: 15px;
+      width: 90%;
+      max-width: 600px;
+      color: #fff;
+      position: relative;
+      animation: zoomIn 0.4s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+
+    .modal h2 { margin-bottom: 15px; }
+    .modal .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      font-size: 20px;
+      color: #ccc;
+    }
+
+    .like-btn {
+      margin: 15px 0;
+      cursor: pointer;
+      background: #00ffe0;
+      color: #000;
+      padding: 6px 12px;
+      border-radius: 8px;
+      display: inline-block;
+    }
+
+    .comments { margin-top: 10px; }
+    .comments input {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    .comments button {
+      background: #00ffe0;
+      border: none;
+      padding: 6px 10px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .comments ul {
+      margin-top: 10px;
+      padding-left: 20px;
+      font-size: 0.9em;
+      color: #aaa;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 20px;
+      background: #111;
+      color: #aaa;
+      font-size: 0.9em;
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes zoomIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Responsive Modal Scroll */
+    @media (max-height: 600px) {
+      .modal { max-height: 80vh; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">BankSupport</div>
+    <nav id="navbar">
+      <a href="index.html">Home</a>
+      <a href="file.html">File a Query</a>
+      <a href="query.html">Common Queries</a>
+      <a href="contact.html">Contact us</a>
+    </nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div id="mobileMenu" class="mobile-menu"></div>
+  </header>
+
+<main>
+    <h1 class="title">Common Banking Queries</h1>
+    <p class="subtext">Explore solutions to frequently asked banking questions by category.</p>
+
+    <div class="search-section">
+     
+      <input type="text" id="searchInput" placeholder="Make your doubt clear by typing...." oninput="showSuggestions()" />
+      
+      <div class="suggestions" id="suggestionsBox"></div>
+    </div>
+    <div class="categories" id="categoryNav">
+  <button class="active" onclick="filterCategory('all')">All</button>
+  <button onclick="filterCategory('kyc')">KYC</button>
+  <button onclick="filterCategory('accounts')">Accounts</button>
+  <button onclick="filterCategory('loans')">Loans</button>
+  <button onclick="filterCategory('atm')">ATM/Debit Cards</button>
+  <button onclick="filterCategory('netbanking')">Net Banking</button>
+  <button onclick="filterCategory('govt')">Government Schemes</button>
+  <button onclick="filterCategory('general')">General</button>
+</div>
+
+<div class="card-grid" id="queryContainer">
+  <!-- Cards inserted by JS -->
+</div>
+
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent">
+    <span class="close" onclick="closeModal()">×</span>
+    <h2 id="modalTitle">Title</h2>
+    <p id="modalAnswer">Full Answer</p>
+    <div class="like-btn" id="likeBtn">Like (<span id="likeCount">0</span>)</div>
+    <div class="comments">
+      <input type="text" id="commentInput" placeholder="Add a comment">
+      <button onclick="submitComment()">Submit</button>
+      <ul id="commentList"></ul>
+    </div>
+  </div>
+</div>
+
+<footer>
+  &copy; 2025 Banking Support | All Rights Reserved
+</footer>
+
+  <script>
+const suggestions = ["loans", "common query", "KYC", "ATM",
+"file query", "file a query", "Netbanking", "net banking", "accounts",
+"Submit a query", "Ask a question", "Raise a concern", "Get help", "Submit issue", "File complaint", "Need support",
+"Register query", "Contact support", "Report issue", "I want to file a query", "How to ask a question?", "Submit my banking issue",
+"Need to file a query", "Where can i ask my query?", "Raise banking question", "Resolve my issue",
+"Loan query form", "Account problem form", "I need help", "Form to submit query", "I want to complain", "Support form",
+"Government scheme", "Debit cards"];
+
+function clearSearch() {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("suggestionsBox").style.display = "none";
+}
+
+function showSuggestions() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const box = document.getElementById("suggestionsBox");
+  if (!input) {
+    box.style.display = "none";
+    return;
+  }
+
+  const matches = suggestions.filter(item => item.toLowerCase().includes(input));
+
+  if (matches.length === 0) {
+    box.innerHTML = `<div class="no-result">No result found</div>`;
+  } else {
+    box.innerHTML = matches.map(m => `<div onclick="scrollToQuery('${m}')">${m}</div>`).join("");
+  }
+
+  box.style.display = "block";
+}
+
+function scrollToQuery(term) {
+  const queryLinks = {
+    "file query": "file.html",
+    "file a query": "file.html",
+    "submit a query": "file.html",
+    "ask a question": "file.html",
+    "raise a concern": "file.html",
+    "get help": "file.html",
+    "submit issue": "file.html",
+    "file complaint": "file.html",
+    "need support": "file.html",
+    "register query": "file.html",
+    "contact support": "file.html",
+    "report issue": "file.html",
+    "i want to file a query": "file.html",
+    "how to ask a question?": "file.html",
+    "submit my banking issue": "file.html",
+    "need to file a query": "file.html",
+    "where can i ask my query?": "file.html",
+    "raise banking question": "file.html",
+    "resolve my issue": "file.html",
+    "loan query form": "file.html",
+    "account problem form": "file.html",
+    "i need help": "file.html",
+    "form to submit query": "file.html",
+    "i want to complain": "file.html",
+    "support form": "file.html",
+    "common query":"query.html",
+    "kyc": "query.html?category=kyc",
+    "accounts": "query.html?category=accounts",
+    "debit cards": "query.html?category=atm",
+    "government scheme": "query.html?category=govt",
+    "loans": "query.html?category=loans",
+    "atm": "query.html?category=atm",
+    "netbanking": "query.html?category=netbanking",
+    
+    
+
+  };
+  const target = queryLinks[term.toLowerCase()];
+  if (target) {
+    window.location.href = target;
+  } else {
+    alert("No matching query section found.");
+  }
+
+  clearSearch();
+}
+
+// ✅ Add this to support Enter key press
+document.getElementById("searchInput").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    const input = this.value.trim().toLowerCase();
+    const matched = suggestions.find(item => item.toLowerCase() === input);
+    
+    if (matched) {
+      scrollToQuery(matched);
+    } else {
+      const box = document.getElementById("suggestionsBox");
+      box.innerHTML = `<div class="no-result">No result found</div>`;
+      box.style.display = "block";
+    }
+  }
+});
+
+function toggleMenu() {
+  const menu = document.getElementById("mobileMenu");
+  if (menu.innerHTML === "") {
+    menu.innerHTML = `
+      <a href="index.html">Home</a>
+      <a href="file.html">File a Query</a>
+      <a href="query.html">Common Queries</a>
+      <a href="contact.html">Contact</a>`
+      ;
+  } else {
+    menu.innerHTML = "";
+  }
+}
+//form script
+ const queries = [
+    {
+      title: "What is KYC and why is it important?",
+      preview: "KYC stands for Know Your Customer..",
+      full: "KYC stands for Know Your Customer. It is a mandatory process used by banks and financial institutions to verify the identity and address of customers. It helps prevent fraud, money laundering, and terrorist financing by ensuring that customers are genuine.",
+      category: "kyc"
+    },
+    {
+      title: "How can I complete my KYC online?",
+      preview: "Many banks offer eKYC (electronic KYC) via their websites or mobile apps. It usually involves:...",
+      full: "Many banks offer eKYC (electronic KYC) via their websites or mobile apps. It usually involves: 1) Entering your Aadhaar number. 2) Verifying through an OTP sent to your Aadhaar-linked mobile. 3) loading scanned ID/address proof if required ",
+      category: "kyc"
+    },
+    {
+      title: "Is KYC mandatory for opening a bank account?",
+      preview: "Yes, KYC is mandatory under RBI regulations to open any type of bank account,...",
+      full: "Yes, KYC is mandatory under RBI regulations to open any type of bank account, including savings, current, or fixed deposits. Without KYC, your account may have limited functionality or may not be opened at all.",
+      category: "kyc"
+    },
+    {
+      title: "Is there a fee for KYC verification?",
+      preview: "No, KYC is a free service provided by banks and financial institutions....",
+      full: "No, KYC is a free service provided by banks and financial institutions. However, if done through third-party agents or centers, charges may apply for service or document upload.",
+      category: "kyc"
+    },
+    {
+      title: "Can minors complete KYC?",
+      preview: "Yes, but with the help of a guardian or parent....",
+      full: "Yes, but with the help of a guardian or parent. The guardian’s KYC details are used along with the minor's birth certificate and photo. Once the minor turns 18, they must update their KYC with individual documents.",
+      category: "kyc"
+    },
+    {
+      title: "Does KYC verification expire?",
+      preview: "While PAN card is not always mandatory for KYC in general,...",
+      full: "While PAN card is not always mandatory for KYC in general, it is required when opening accounts involving financial transactions such as fixed deposits, investments, or for income tax compliance. In most cases, a combination of PAN and Aadhaar provides a complete KYC, but if a PAN is not available, a Form 60 declaration might be accepted by the bank under certain conditions.",
+      category: "kyc"
+    },
+    {
+      title: "Can I do KYC for multiple banks using the same documents?",
+      preview: "Yes, you can use the same valid KYC documents for different banks or financial services...",
+      full: "Yes, you can use the same valid KYC documents for different banks or financial services. However, each bank conducts its own verification process. Even though the documents are the same, you must still submit them individually for each institution, unless the bank uses a centralized KYC registry (CKYC), in which case the details may be fetched using your CKYC number.",
+      category: "kyc"
+    },
+    {
+      title: "What should I do if my KYC is rejected?",
+      preview: "If your KYC application is rejected, the bank or institution will typically inform you of the reason,...",
+      full: "If your KYC application is rejected, the bank or institution will typically inform you of the reason, such as missing documents, unclear scans, or invalid address proof. In such cases, you must resubmit the correct documents as per the guidelines. It's important to ensure all images are clear, the information is consistent, and the documents are valid and not expired.",
+      category: "kyc"
+    },
+    {
+      title: "Why is my bank asking for KYC again when I’ve already submitted it?",
+      preview: "Banks may request KYC again if your earlier submission has expired or if your documents are outdated....",
+      full: "Banks may request KYC again if your earlier submission has expired or if your documents are outdated. This usually happens as part of the periodic KYC update requirement mandated by the RBI. Additionally, if there are changes in regulations, address, contact information, or there is a suspicion of unusual account activity, banks may reinitiate the KYC process to ensure customer records are up to date.",
+      category: "kyc"
+    },
+    {
+      title: "Is video KYC accepted by banks in India?",
+      preview: "Yes, video KYC has been approved by the Reserve Bank of India as a valid method for customer verification....",
+      full: "Yes, video KYC has been approved by the Reserve Bank of India as a valid method for customer verification. It involves a video call between the bank representative and the customer, during which the customer is required to show their ID documents and answer a few basic questions. This method provides a secure and convenient alternative to in-person verification, especially for remote or online account openings.",
+      category: "kyc"
+    },
+  {
+    title: "What are the different types of bank accounts?",
+    preview: "Banks offer savings, current, and fixed deposit accounts...",
+    full: "Banks offer various types of accounts including savings accounts for individuals to earn interest on deposits, current accounts for businesses with high transaction needs, fixed deposit accounts for earning higher interest over a fixed term, and recurring deposit accounts for disciplined monthly savings.",
+    category: "accounts"
+  },
+  {
+    title: "How can I open a savings account?",
+    preview: "You can open a savings account online or by visiting a branch...",
+    full: "You can open a savings account either by visiting the nearest bank branch with valid identity and address proof, or online through the bank's website or mobile app. The process usually involves filling out an application form, submitting KYC documents, and making an initial deposit if required.",
+    category: "accounts"
+  },
+  {
+    title: "What is the minimum balance requirement?",
+    preview: "Minimum balance depends on the bank and account type...",
+    full: "The minimum balance requirement varies based on the bank and the type of account. Some basic savings accounts have zero balance requirements, while regular accounts may require maintaining a minimum monthly average balance, failing which penalties may be applied.",
+    category: "accounts"
+  },
+  {
+    title: "How do I update my address in the bank account?",
+    preview: "Address updates can be done online or offline by submitting proof...",
+    full: "To update your address, you can visit your bank branch with a valid proof of new address such as Aadhaar card or utility bill, or log in to internet banking and upload the document. Once submitted, the bank will verify and update your address in their records.",
+    category: "accounts"
+  },
+  {
+    title: "What is a joint account and how does it work?",
+    preview: "A joint account is operated by two or more individuals...",
+    full: "A joint account is opened and operated by two or more individuals who can either act jointly or individually depending on the mode of operation selected. It is commonly used by spouses, business partners, or family members to manage shared finances.",
+    category: "accounts"
+  },
+  {
+    title: "How can I close my bank account?",
+    preview: "Account closure requires submitting a written request to the bank...",
+    full: "To close your bank account, you need to visit your branch and submit a written closure request along with your debit card, cheque book, and identity proof. Some banks may allow you to download and send a closure form by post or request it through net banking.",
+    category: "accounts"
+  },
+  {
+    title: "What is the difference between savings and current account?",
+    preview: "Savings accounts are for individuals, while current accounts are for businesses...",
+    full: "A savings account is designed for individuals to save money and earn interest, whereas a current account is tailored for businesses or professionals to carry out frequent and large transactions without any interest benefits. Current accounts usually have higher minimum balance requirements than savings accounts.",
+    category: "accounts"
+  },
+  {
+    title: "Can I have multiple accounts in the same bank?",
+    preview: "Yes, you can hold multiple accounts for different purposes...",
+    full: "You can open multiple accounts in the same bank under different account types or even within the same type for different purposes. However, you should ensure that you comply with all KYC norms and maintain the required balance in each account to avoid penalties.",
+    category: "accounts"
+  },
+  {
+    title: "What is a dormant account?",
+    preview: "A dormant account is inactive for more than 24 months...",
+    full: "A bank account becomes dormant when there are no customer-initiated transactions like deposits, withdrawals, or fund transfers for a continuous period of 24 months. To reactivate it, you must visit the branch with identity proof and request for activation.",
+    category: "accounts"
+  },
+  {
+    title: "How can I link my Aadhaar with my bank account?",
+    preview: "You can link Aadhaar through internet banking, ATM, or branch...",
+    full: "To link your Aadhaar with your bank account, you can use internet banking, the bank's mobile app, an ATM, SMS, or visit the branch directly. You'll need to enter or submit your Aadhaar number and wait for confirmation via SMS or email from the bank.",
+    category: "accounts"
+  },
+
+  {
+    title: "What are the different types of loans offered by banks?",
+    preview: "Banks provide personal, home, education, and business loans...",
+    full: "Banks offer a variety of loans such as personal loans for immediate financial needs, home loans for purchasing or renovating property, education loans for funding academic expenses, and business loans for supporting enterprise activities. Each loan has specific eligibility, interest rates, and repayment terms based on the bank's policies and the applicant's profile.",
+    category: "loans"
+  },
+  {
+    title: "What is the difference between secured and unsecured loans?",
+    preview: "Secured loans require collateral, while unsecured loans don’t...",
+    full: "A secured loan is backed by collateral like property, gold, or fixed deposits, and typically offers lower interest rates due to reduced lender risk. Unsecured loans, like personal or credit card loans, do not require collateral and are based purely on creditworthiness, usually attracting higher interest rates and shorter repayment periods.",
+    category: "loans"
+  },
+  {
+    title: "How is the interest rate on a loan determined?",
+    preview: "Interest rates depend on the loan type, credit score, and bank policies...",
+    full: "The interest rate on a loan is influenced by factors such as the type of loan, the borrower's credit score, income level, repayment capacity, and the bank's internal risk assessment. Market rates and RBI policies also play a significant role, especially for floating rate loans that adjust over time.",
+    category: "loans"
+  },
+  {
+    title: "What is EMI and how is it calculated?",
+    preview: "EMI is the fixed monthly repayment of your loan...",
+    full: "EMI, or Equated Monthly Installment, is the fixed amount a borrower pays every month to repay a loan. It includes both principal and interest components. The EMI is calculated based on the loan amount, interest rate, and loan tenure using a standard formula or bank EMI calculator. Longer tenures may reduce EMI amounts but increase total interest paid.",
+    category: "loans"
+  },
+  {
+    title: "Can I repay my loan early? Are there any charges?",
+    preview: "Yes, most banks allow prepayment but may charge a fee...",
+    full: "Loan prepayment is the early repayment of part or full loan amount before the scheduled tenure. While banks allow this facility, some may impose prepayment or foreclosure charges, especially on fixed-rate loans. It’s advisable to check with your bank, as many institutions waive prepayment charges on floating-rate loans as per RBI guidelines.",
+    category: "loans"
+  },
+  {
+    title: "What happens if I miss an EMI payment?",
+    preview: "Missing an EMI can lead to penalties and credit score impact...",
+    full: "If you miss an EMI payment, the bank may charge a late fee or penalty, and it can negatively affect your credit score. Continuous defaults can result in legal notices, collection efforts, and potential seizure of collateral in case of secured loans. It’s important to inform the bank beforehand if you're facing difficulties to explore restructuring options.",
+    category: "loans"
+  },
+  {
+    title: "How does a credit score affect loan approval?",
+    preview: "Higher credit scores improve your chances of loan approval...",
+    full: "A credit score reflects your repayment history and financial behavior. Lenders use this score to assess your creditworthiness. A high score increases the likelihood of loan approval and may lead to better interest rates, while a low score might result in rejection or higher rates. Regular repayment and low credit utilization help maintain a good score.",
+    category: "loans"
+  },
+  {
+    title: "What is the loan disbursement process?",
+    preview: "Loan disbursement involves document verification and agreement signing...",
+    full: "Once your loan is approved, the bank verifies your documents and asks you to sign a loan agreement. After this, the loan amount is credited to your account or directly to the seller in case of home or vehicle loans. The process may vary slightly based on the type of loan and bank’s internal policies.",
+    category: "loans"
+  },
+  {
+    title: "Can I transfer my existing loan to another bank?",
+    preview: "Yes, loan balance transfer helps reduce interest burden...",
+    full: "A loan balance transfer allows you to shift your outstanding loan from one bank to another offering a lower interest rate. This can reduce your EMI or total interest burden. However, you should check for processing fees, prepayment charges, and the overall cost before making the switch.",
+    category: "loans"
+  },
+  {
+    title: "What documents are required to apply for a loan?",
+    preview: "Documents vary by loan type, but ID and income proof are essential...",
+    full: "To apply for a loan, banks typically require identity proof, address proof, income documents like salary slips or IT returns, bank statements, and passport-sized photographs. Some loans may need additional documents such as property papers for home loans or admission letters for education loans.",
+    category: "loans"
+  },
+
+  {
+    title: "What is the difference between an ATM card and a debit card?",
+    preview: "ATM cards are mainly for withdrawals, while debit cards work online too...",
+    full: "An ATM card is primarily used for withdrawing cash from ATMs and may not support online or POS transactions. A debit card, on the other hand, allows you to withdraw cash as well as make purchases at stores, online websites, and through mobile apps, using funds directly from your bank account.",
+    category: "atm"
+  },
+  {
+    title: "What should I do if my ATM/debit card is lost or stolen?",
+    preview: "Immediately block the card through phone banking or app...",
+    full: "If your ATM or debit card is lost or stolen, you should immediately block it using your bank’s mobile app, net banking portal, or by calling customer service. This prevents unauthorized transactions. After blocking, you can request a replacement card, which will be delivered to your registered address.",
+    category: "atm"
+  },
+  {
+    title: "How can I set or reset my debit card PIN?",
+    preview: "You can reset your PIN via ATM, app, or net banking...",
+    full: "Most banks allow you to set or reset your debit card PIN using their ATM, mobile banking app, or net banking portal. At the ATM, select the PIN change option and authenticate using your old PIN or OTP sent to your registered mobile number. Online methods typically require login and OTP verification for security.",
+    category: "atm"
+  },
+  {
+    title: "Why is my debit card declined even when I have enough balance?",
+    preview: "Card may be blocked, expired, or not enabled for that service...",
+    full: "Your debit card can be declined due to reasons like incorrect PIN entry, expired card validity, disabled international or online transaction setting, or if the card is temporarily blocked due to suspicious activity. Even technical issues with the bank’s servers or the merchant’s payment gateway can cause decline errors.",
+    category: "atm"
+  },
+  {
+    title: "Is there a limit on ATM withdrawals using a debit card?",
+    preview: "Yes, banks impose daily withdrawal limits based on card type...",
+    full: "Banks set daily ATM withdrawal limits for each type of debit card, which can range from ₹10,000 to ₹1,00,000 or more. The exact limit depends on your account type and the category of the card issued to you. This is done to minimize risk in case of card theft or fraud.",
+    category: "atm"
+  },
+  {
+    title: "What are ATM transaction charges beyond free limits?",
+    preview: "Banks charge a fee if you exceed free ATM usage limits...",
+    full: "Banks allow a limited number of free ATM transactions each month, usually five at your bank’s ATMs and three at other banks' ATMs in metro cities. Beyond this, a nominal fee is charged per transaction, which varies by bank and can include both financial and non-financial transactions.",
+    category: "atm"
+  },
+  {
+    title: "Can I use my debit card for international transactions?",
+    preview: "Yes, if international usage is enabled on your card...",
+    full: "You can use your debit card for international purchases and ATM withdrawals if your bank has enabled international usage on your card. You may need to activate this feature manually via net banking or mobile app. Keep in mind that currency conversion charges and international transaction fees may apply.",
+    category: "atm"
+  },
+  {
+    title: "What should I do if cash is debited but not dispensed at the ATM?",
+    preview: "Raise a complaint with the bank immediately for resolution...",
+    full: "If cash is debited from your account but not dispensed at the ATM, note the transaction time and location, then contact your bank immediately. Most banks auto-reverse such failed transactions within 5-7 working days. If not resolved, you can escalate the complaint through the bank’s grievance redressal mechanism.",
+    category: "atm"
+  },
+  {
+    title: "How do I enable or disable contactless payments on my debit card?",
+    preview: "Manage contactless feature through your bank's app or net banking...",
+    full: "Most banks allow users to enable or disable the contactless tap-and-pay feature on debit cards using mobile banking or net banking platforms. You can also set spending limits or temporarily turn off contactless payments for added security and control over your card usage.",
+    category: "atm"
+  },
+  {
+    title: "Can I link my debit card to digital wallets or UPI apps?",
+    preview: "Yes, debit cards are used for verifying UPI and wallet accounts...",
+    full: "Debit cards can be linked to UPI apps and digital wallets to facilitate secure online transactions. During the setup of these services, your debit card details are used to generate UPI PINs or authorize linking. Once verified, you can make payments using UPI without entering card details every time.",
+    category: "atm"
+  },
+
+  {
+    title: "What is net banking and how does it work?",
+    preview: "Net banking allows customers to manage accounts online...",
+    full: "Net banking is a digital service offered by banks that allows customers to access and manage their bank accounts online. You can check balances, transfer funds, pay bills, open fixed deposits, and more through a secure internet portal without visiting a branch.",
+    category: "netbanking"
+  },
+  {
+    title: "How can I register for net banking?",
+    preview: "You can register using your customer ID and account details...",
+    full: "To register for net banking, visit your bank’s official website and look for the net banking registration section. You'll need to enter your customer ID, account number, and registered mobile number. After verifying your identity via OTP or debit card details, you can set a username and password.",
+    category: "netbanking"
+  },
+  {
+    title: "Is it safe to use net banking?",
+    preview: "Yes, if you follow proper security practices...",
+    full: "Net banking is generally safe as banks use strong encryption, firewalls, and two-factor authentication. However, customers must avoid using public Wi-Fi, never share login credentials, regularly update passwords, and be cautious of phishing links to ensure secure access.",
+    category: "netbanking"
+  },
+  {
+    title: "What should I do if I forget my net banking password?",
+    preview: "Use the 'Forgot Password' option to reset it securely...",
+    full: "If you forget your net banking password, you can reset it using the 'Forgot Password' link on the bank’s login page. You'll be asked to verify your identity through your customer ID, mobile number, OTP, or debit card details before setting a new password.",
+    category: "netbanking"
+  },
+  {
+    title: "Can I transfer money using net banking?",
+    preview: "Yes, you can transfer funds via NEFT, RTGS, or IMPS...",
+    full: "Net banking allows you to transfer money to other bank accounts using NEFT (National Electronic Funds Transfer), RTGS (Real-Time Gross Settlement), or IMPS (Immediate Payment Service). You can also add payees, schedule transfers, and track transaction history easily online.",
+    category: "netbanking"
+  },
+  {
+    title: "Are there any charges for using net banking?",
+    preview: "Basic services are free, but fund transfers may have charges...",
+    full: "Most banks offer basic net banking services like balance check, account statements, and bill payments for free. However, certain transactions like NEFT, RTGS, or IMPS transfers might carry nominal charges depending on the amount and timing of the transaction.",
+    category: "netbanking"
+  },
+  {
+    title: "How do I unlock my net banking account?",
+    preview: "Use the unlock option or contact your bank’s support...",
+    full: "Your net banking account may get locked after multiple incorrect login attempts. To unlock it, you can use the 'Unlock User' or 'Reset Login' option on the bank's website. You may also need to contact customer care or visit a branch to verify your identity and reactivate access.",
+    category: "netbanking"
+  },
+  {
+    title: "Can I access net banking on my mobile phone?",
+    preview: "Yes, via browser or the official mobile banking app...",
+    full: "You can access net banking on your smartphone either through the mobile web browser or by downloading the bank’s official mobile banking app. These apps provide similar functionality with added features like biometric login and quicker access to key services.",
+    category: "netbanking"
+  },
+  {
+    title: "What is the difference between net banking and mobile banking?",
+    preview: "Net banking works on browsers, mobile banking uses apps...",
+    full: "Net banking is accessed via a web browser on a desktop or mobile, offering full control of account services. Mobile banking typically refers to the use of a bank’s dedicated mobile app, which is optimized for smartphones and often includes app-exclusive features and better user experience.",
+    category: "netbanking"
+  },
+  {
+    title: "Is net banking available 24x7?",
+    preview: "Most services are available round the clock...",
+    full: "Net banking services are available 24x7 for most functions like viewing account details, bill payments, and fund transfers via IMPS. However, some services like NEFT or certain maintenance-related operations may be unavailable during specific time slots or bank holidays.",
+    category: "netbanking"
+  },
+
+  {
+    title: "What is the Pradhan Mantri Jan Dhan Yojana (PMJDY)?",
+    preview: "PMJDY is a financial inclusion scheme for all households...",
+    full: "The Pradhan Mantri Jan Dhan Yojana is a government initiative aimed at providing affordable access to financial services such as bank accounts, remittances, credit, insurance, and pensions. It ensures that every household, especially in rural areas, has access to a bank account with zero balance and benefits like accident insurance and direct benefit transfers.",
+    category: "govt"
+  },
+  {
+    title: "Who is eligible for the Pradhan Mantri Awas Yojana (PMAY)?",
+    preview: "PMAY targets urban and rural families needing housing support...",
+    full: "Under the Pradhan Mantri Awas Yojana, eligibility is determined by the income level and whether the beneficiary owns a pucca house. The scheme is divided into PMAY-Urban and PMAY-Gramin, each providing subsidies for first-time home buyers from economically weaker sections, low-income groups, and middle-income groups through interest subsidies on housing loans.",
+    category: "govt"
+  },
+  {
+    title: "What benefits does the Sukanya Samriddhi Yojana offer?",
+    preview: "This scheme encourages saving for a girl child’s future...",
+    full: "The Sukanya Samriddhi Yojana is a small deposit scheme exclusively for the girl child, offering one of the highest interest rates among government savings schemes. Parents or guardians can open the account in the name of a girl under 10 years of age and deposit up to a certain limit annually, with tax benefits and maturity upon the girl turning 21 or at marriage after age 18.",
+    category: "govt"
+  },
+  {
+    title: "How does the Atal Pension Yojana work?",
+    preview: "It provides pension benefits to workers in unorganized sectors...",
+    full: "The Atal Pension Yojana is meant for individuals in the unorganized sector who are not covered by formal pension schemes. Subscribers aged between 18 to 40 can choose a pension amount that they will receive after the age of 60. Contributions depend on age and desired pension, and the government may co-contribute for eligible subscribers.",
+    category: "govt"
+  },
+  {
+    title: "Can I invest in Public Provident Fund (PPF)?",
+    preview: "Yes, PPF is a long-term tax-saving investment backed by the government...",
+    full: "The Public Provident Fund is a government-backed long-term savings scheme with tax benefits under Section 80C. Individuals can open a PPF account in a bank or post office and invest annually for a minimum of 15 years. The interest earned and maturity amount are completely tax-free, making it a popular option for retirement savings.",
+    category: "govt"
+  },
+  {
+    title: "What is the objective of the Stand-Up India Scheme?",
+    preview: "This scheme promotes entrepreneurship among SC/ST and women...",
+    full: "The Stand-Up India Scheme aims to facilitate bank loans between ₹10 lakh and ₹1 crore to at least one Scheduled Caste/Scheduled Tribe borrower and one woman borrower per bank branch for setting up a greenfield enterprise. It supports job creation and financial empowerment through accessible funding and handholding support.",
+    category: "govt"
+  },
+  {
+    title: "How can I apply for the PM Kisan Samman Nidhi Yojana?",
+    preview: "You can apply online or through local officials for PM-KISAN...",
+    full: "Under the PM Kisan Samman Nidhi Yojana, small and marginal farmers receive financial assistance of ₹6,000 per year in three equal installments. Farmers can register online via the PM-KISAN portal or approach local revenue or agriculture officials to submit land ownership documents and Aadhaar details for verification.",
+    category: "govt"
+  },
+  {
+    title: "What is the difference between PMJJBY and PMSBY?",
+    preview: "Both are low-cost insurance schemes with different coverage types...",
+    full: "PMJJBY (Pradhan Mantri Jeevan Jyoti Bima Yojana) provides life insurance coverage of ₹2 lakh for a premium of ₹330 per year, while PMSBY (Pradhan Mantri Suraksha Bima Yojana) offers accidental insurance of ₹2 lakh for ₹12 per year. Both are auto-debited annually from the bank account and are available to account holders aged 18 to 50 or 70 respectively.",
+    category: "govt"
+  },
+  {
+    title: "Is the National Pension Scheme (NPS) a good retirement option?",
+    preview: "NPS offers a market-linked, tax-efficient way to build retirement savings...",
+    full: "The National Pension Scheme is a government-sponsored pension initiative where individuals contribute regularly into a pension account during their working life. Upon retirement, a portion can be withdrawn lump-sum, and the rest is used to buy an annuity. It offers tax benefits and investment flexibility across equity, corporate debt, and government bonds.",
+    category: "govt"
+  },
+  {
+    title: "What is the benefit of the Digital India campaign in banking?",
+    preview: "It promotes digital transactions and financial inclusion...",
+    full: "The Digital India campaign aims to transform India into a digitally empowered society and knowledge economy. In banking, it promotes digital payment platforms, online account opening, Aadhaar-based authentication, and mobile banking services, helping reduce dependence on cash and improving access to financial services across urban and rural areas.",
+    category: "govt"
+  },
+
+  {
+    title: "What is the difference between a savings and a current account?",
+    preview: "Savings accounts are meant for individuals, current for businesses...",
+    full: "A savings account is designed for personal use and encourages saving habits by offering interest on deposits. It has limits on the number of withdrawals per month. In contrast, a current account is mainly for businesses, offering unlimited transactions but usually does not provide interest on the balance maintained.",
+    category: "general"
+  },
+  {
+    title: "Why is KYC necessary in banking?",
+    preview: "KYC helps verify customer identity and prevent fraud...",
+    full: "Know Your Customer (KYC) is a mandatory process in banking that involves verifying the identity and address of customers. It helps prevent financial crimes such as money laundering, identity theft, and financing of illegal activities by ensuring banks know who they are dealing with.",
+    category: "general"
+  },
+  {
+    title: "What is IFSC and why is it important?",
+    preview: "IFSC is a unique code used for online fund transfers...",
+    full: "The Indian Financial System Code (IFSC) is an alphanumeric code that uniquely identifies a bank branch participating in electronic funds transfer systems like NEFT, RTGS, and IMPS. It ensures that your money is transferred securely and accurately to the intended recipient’s bank branch.",
+    category: "general"
+  },
+  {
+    title: "How can I open a bank account?",
+    preview: "You can open it online or by visiting a bank branch...",
+    full: "To open a bank account, you can either apply online through the bank's website or visit the nearest branch. You need to submit identity proof, address proof, recent passport-size photographs, and complete the KYC process. Some banks also offer video KYC for faster digital account opening.",
+    category: "general"
+  },
+  {
+    title: "What is the difference between NEFT, RTGS, and IMPS?",
+    preview: "These are electronic fund transfer methods with different features...",
+    full: "NEFT (National Electronic Funds Transfer) allows batch-based money transfers, usually credited within a few hours. RTGS (Real Time Gross Settlement) is used for large-value transactions processed instantly. IMPS (Immediate Payment Service) offers 24x7 instant fund transfer services even on holidays and weekends for smaller amounts.",
+    category: "general"
+  },
+  {
+    title: "What happens if I deposit more than the allowed cash limit?",
+    preview: "Large deposits may require PAN and trigger scrutiny...",
+    full: "If you deposit a large amount of cash beyond the permissible limit, especially over ₹50,000 in a single day, you must provide your PAN card. Regular high-value deposits may attract scrutiny from the Income Tax Department, and the bank may report such transactions under anti-money laundering norms.",
+    category: "general"
+  },
+  {
+    title: "How can I link Aadhaar to my bank account?",
+    preview: "You can link it via net banking, mobile app, or branch visit...",
+    full: "To link your Aadhaar with your bank account, log in to your internet banking or mobile banking app and follow the Aadhaar linking section. Alternatively, you can visit your bank branch with a photocopy of your Aadhaar card. Linking helps with direct benefit transfers and reduces fraud.",
+    category: "general"
+  },
+  {
+    title: "Why do banks charge minimum balance fees?",
+    preview: "It ensures account maintenance and operational cost recovery...",
+    full: "Banks require a minimum balance to be maintained in certain types of accounts to cover operational expenses. If the balance falls below the set limit, a fee may be charged. However, many banks offer zero balance accounts under schemes like Jan Dhan for basic banking services.",
+    category: "general"
+  },
+  {
+    title: "What is a bank statement and how do I get one?",
+    preview: "A bank statement lists your account transactions over a period...",
+    full: "A bank statement is a detailed record of all debits, credits, and balances in your account over a specific time frame. You can request it through net banking, mobile apps, by visiting the branch, or using an ATM. Many banks also email monthly statements automatically.",
+    category: "general"
+  },
+  {
+    title: "What should I do if my cheque bounces?",
+    preview: "Cheque bounce can lead to penalties and legal action...",
+    full: "If your cheque bounces due to insufficient funds or any other reason, you may be liable to pay penalties to both the bank and the payee. It could also lead to legal consequences under the Negotiable Instruments Act. Always ensure adequate balance and accurate details before issuing a cheque.",
+    category: "general"
+  },
+
+
+
+  ];
+
+  const queryContainer = document.getElementById("queryContainer");
+  const searchInput = document.getElementById("searchInput");
+
+  function renderCards(filter = "all") {
+    queryContainer.innerHTML = "";
+    queries.forEach((q, i) => {
+      if (filter === "all" || q.category === filter) {
+        queryContainer.innerHTML += `
+          <div class="query-card">
+            <h3>${q.title}</h3>
+            <p>${q.preview}</p>
+            <button onclick="openModal(${i})">Read More</button>
+          </div>
+        `;
+      }
+    });
+  }
+
+  function filterCategory(cat) {
+    document.querySelectorAll(".categories button").forEach(btn => btn.classList.remove("active"));
+    event.target.classList.add("active");
+    renderCards(cat);
+  }
+
+  function openModal(index) {
+    const q = queries[index];
+    document.getElementById("modalTitle").innerText = q.title;
+    document.getElementById("modalAnswer").innerText = q.full;
+    currentQuery = q.title;
+
+    // Likes
+    const likes = localStorage.getItem(currentQuery + "_likes") || 0;
+    document.getElementById("likeCount").innerText = likes;
+
+    // Comments
+    const commentData = JSON.parse(localStorage.getItem(currentQuery + "_comments") || "[]");
+    const commentList = document.getElementById("commentList");
+    commentList.innerHTML = "";
+    commentData.forEach(c => {
+      commentList.innerHTML += `<li>${c}</li>`;
+    });
+
+    document.getElementById("modalOverlay").style.display = "flex";
+  }
+
+  function closeModal() {
+    document.getElementById("modalOverlay").style.display = "none";
+  }
+
+  let currentQuery = "";
+
+  document.getElementById("likeBtn").onclick = function () {
+    const key = currentQuery + "_liked";
+    if (!localStorage.getItem(key)) {
+      let likes = parseInt(localStorage.getItem(currentQuery + "_likes") || "0");
+      likes++;
+      localStorage.setItem(currentQuery + "_likes", likes);
+      localStorage.setItem(key, "true");
+      document.getElementById("likeCount").innerText = likes;
+    }
+  };
+
+  function submitComment() {
+    const input = document.getElementById("commentInput");
+    const text = input.value.trim();
+    if (text !== "") {
+      const comments = JSON.parse(localStorage.getItem(currentQuery + "_comments") || "[]");
+      comments.push(text);
+      localStorage.setItem(currentQuery + "_comments", JSON.stringify(comments));
+      document.getElementById("commentList").innerHTML += `<li>${text}</li>`;
+      input.value = "";
+    }
+  }
+
+  searchInput.addEventListener("input", () => {
+    const term = searchInput.value.toLowerCase();
+    const match = queries.find(q => q.title.toLowerCase().includes(term));
+    if (match) {
+      const cat = match.category;
+      filterCategory(cat);
+    }
+  });
+
+  renderCards();
+
+  window.addEventListener("DOMContentLoaded", () => {
+  const urlParams = new URLSearchParams(window.location.search);
+  const category = urlParams.get("category");
+
+  if (category) {
+    const button = Array.from(document.querySelectorAll(".categories button"))
+      .find(btn => btn.textContent.toLowerCase().includes(category));
+    if (button) {
+      button.click(); // Trigger the filter
+    } else {
+      renderCards("all");
+    }
+  } else {
+    renderCards("all");
+  }
+});
+  </script>
+</body>
+</html>

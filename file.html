@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Field executives </title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Poppins', sans-serif;
+    }
+    body {
+      background: linear-gradient(rgba(42, 43, 44, 0.8), rgba(41, 55, 55, 0.9)), url('https://images.unsplash.com/photo-1573164713988-8665fc963095') no-repeat center center/cover;
+      color: #f0f0f0;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 40px;
+      background-color: #121212cc;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.8em;
+      font-weight: bold;
+      color: #4dd0e1;
+    }
+
+    nav {
+      display: flex;
+      gap: 30px;
+      transition: all 0.3s ease;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 1em;
+      position: relative;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      bottom: -5px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: #4dd0e1;
+      transition: 0.4s ease;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .hamburger {
+      display: none;
+      font-size: 1.5em;
+      cursor: pointer;
+    }
+
+    .mobile-menu {
+      display: none;
+      flex-direction: column;
+      background: #1e1e1ecc;
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 200px;
+      border-radius: 0 0 10px 10px;
+      animation: slideIn 0.4s ease forwards;
+    }
+
+    .mobile-menu a {
+      padding: 10px 20px;
+      border-bottom: 1px solid #333;
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    main {
+      padding-top: 100px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 2.5em;
+      animation: fadeInDown 1s ease-in-out;
+      margin-bottom: 20px;
+    }
+
+    .button-container {
+      margin: 20px auto;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      padding: 15px 30px;
+      background: #4dd0e1;
+      border: none;
+      border-radius: 30px;
+      color: #000;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px #06b7d2;
+    }
+
+    .search-section {
+      margin: 40px auto;
+      max-width: 600px;
+      position: relative;
+    }
+
+    .search-section input {
+      width: 100%;
+      padding: 15px 50px;
+      border-radius: 30px;
+      border: none;
+      outline: none;
+      font-size: 1em;
+    }
+
+    .search-section i.clear {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+      cursor: pointer;
+    }
+
+    .search-section i.search {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #777;
+    }
+
+    .suggestions {
+      background: #222;
+      border-radius: 10px;
+      margin-top: 10px;
+      padding: 10px;
+      display: none;
+      text-align: left;
+    }
+
+    .suggestions div {
+      padding: 5px;
+      cursor: pointer;
+      border-bottom: 1px solid #333;
+    }
+
+    .suggestions div:hover {
+      background: #04afd5;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      padding: 40px;
+    }
+
+    .card {
+      background: #1e1e1ecc;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 0 25px #039ba9;
+    }
+
+    .card img {
+      width: 60px;
+      margin-bottom: 10px;
+    }
+
+    .objective {
+      padding: 40px 20px;
+      text-align: center;
+      background: #121212cc;
+    }
+
+    .objective p {
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.2em;
+      animation: fadeIn 1s ease-in;
+    }
+
+    footer {
+      background: #111;
+      padding: 30px;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: center;
+      color: #ccc;
+      font-size: 0.9em;
+    }
+
+    .social i {
+      margin-right: 15px;
+      transition: color 0.3s;
+      cursor: pointer;
+    }
+
+    .social i:hover {
+      color: #4dd0e1;
+    }
+
+    @keyframes fadeInDown {
+      from {
+        opacity: 0;
+        transform: translateY(-30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      nav {
+        display: none;
+      }
+
+      .hamburger {
+        display: block;
+      }
+
+      .mobile-menu {
+        display: flex;
+      }
+    }
+
+    /*style*/
+    .search-container {
+    position: relative;
+    max-width: 500px;
+    margin: 0 auto 2rem;
+}
+
+.search-box {
+    width: 100%;
+    padding: 0.75rem 2.5rem 0.75rem 2.5rem; /* Left & Right space for icons */
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 1rem;
+}
+
+.icon-left, .icon-right {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 1.2rem;
+    color: #555;
+    z-index: 2;
+}
+
+.icon-left {
+    left: 10px;
+    cursor: pointer;
+}
+
+.icon-right {
+    right: 10px;
+}
+
+.suggestions {
+    background: #fff;
+    color: #000;
+    position: absolute;
+    top: 110%;
+    width: 100%;
+    border-radius: 0 0 10px 10px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.mobile-nav a {
+    display: block;
+    width: 100%;
+    padding: 0.75rem 1rem;
+    color: #fff;
+    text-align: center;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    text-decoration: none;
+    transition: background 0.3s;
+}
+
+.mobile-nav a:hover {
+    background: #00bcd4;
+    color: #000;
+}
+
+@media screen and (max-width: 768px) {
+    nav {
+        display: none;
+    }
+
+    .hamburger {
+        display: flex;
+    }
+
+    .mobile-nav.show {
+        display: flex;
+        animation: slideDown 0.3s ease forwards;
+    }
+
+    .mobile-nav {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
+/*form*/
+
+ .container {
+      max-width: 600px;
+      margin: auto;
+      background: #1e1e2f;
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1.2s ease;
+    }
+
+    h2 {
+      text-align: center;
+      margin-bottom: 25px;
+      color: #00c6ff;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 5px;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 5px;
+      background: #2a2a3c;
+      color: #fff;
+      transition: 0.3s ease;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      background: #33334d;
+      box-shadow: 0 0 5px #00c6ff;
+    }
+
+    button {
+      width: 100%;
+      margin-top: 20px;
+      padding: 12px;
+      background: #00c6ff;
+      color: #000;
+      border: none;
+      border-radius: 5px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    button:hover {
+      background: #00a3cc;
+    }
+
+    #responseMessage {
+      margin-top: 15px;
+      text-align: center;
+      font-weight: 600;
+    }
+
+    @keyframes fadeIn {
+      from {opacity: 0; transform: translateY(30px);}
+      to {opacity: 1; transform: translateY(0);}
+    }
+
+    @media (max-width: 600px) {
+      .container {
+        padding: 20px;
+      }
+    }
+    
+  </style>
+</head>
+<body>
+  <header>
+    <div class="logo">BankSupport</div>
+    <nav id="navbar">
+      <a href="index.html">Home</a>
+      <a href="file.html">File a Query</a>
+      <a href="query.html">Common Queries</a>
+      <a href="contact.html">Contact us</a>
+    </nav>
+    <div class="hamburger" onclick="toggleMenu()">
+      <i class="fas fa-bars"></i>
+    </div>
+    <div id="mobileMenu" class="mobile-menu"></div>
+  </header>
+
+  <main>
+    <h1>Welcome to query portal</h1>
+    <p>Have a query? fill out the form</p>
+
+
+    <div class="search-section">
+     
+      <input type="text" id="searchInput" placeholder="Make your doubt clear by typing...." oninput="showSuggestions()" />
+      
+      <div class="suggestions" id="suggestionsBox"></div>
+    </div>
+    <div class="container">
+  <h2>File a Query</h2>
+  <form id="queryForm">
+    <label>Full Name *</label>
+    <input type="text" name="fullName" required>
+
+    <label>Email ID *</label>
+    <input type="email" name="email" required placeholder="example@gmail.com">
+
+    <label>Mobile Number *</label>
+    <input type="tel" name="mobileNumber" required placeholder="10-digit mobile number" pattern="[0-9]{10}" oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,10)">
+
+    <label>Query Category *</label>
+    <select name="queryType" required>
+      <option value="">-- Select Category --</option>
+      <option value="KYC">KYC</option>
+      <option value="Loan">Loan</option>
+      <option value="ATM">ATM</option>
+      <option value="FD">FD</option>
+      <option value="Others">Others</option>
+    </select>
+
+    <label>Subject / Title *</label>
+    <input type="text" name="subject" required maxlength="50" placeholder="Short title of your query">
+
+    <label>Query Message *</label>
+    <textarea name="message" rows="4" maxlength="800" placeholder="Describe your query briefly (max 800 characters)" required></textarea>
+
+    <button type="submit">Submit Query</button>
+    <p id="responseMessage"></p>
+  </form>
+</div><br>
+  <footer>
+    <div>© 2025 BankSupport</div>
+    <h3>A great initiative by Busibess corresondent and facilitator's</h3>
+    <div class="social">
+      <i class=""></i>
+    </div>
+  </footer>
+
+  <script>
+const suggestions = ["loans", "common query", "KYC", "ATM",
+"file query", "file a query", "Netbanking", "net banking", "accounts",
+"Submit a query", "Ask a question", "Raise a concern", "Get help", "Submit issue", "File complaint", "Need support",
+"Register query", "Contact support", "Report issue", "I want to file a query", "How to ask a question?", "Submit my banking issue",
+"Need to file a query", "Where can i ask my query?", "Raise banking question", "Resolve my issue",
+"Loan query form", "Account problem form", "I need help", "Form to submit query", "I want to complain", "Support form",
+"Government scheme", "Debit cards"];
+
+function clearSearch() {
+  document.getElementById("searchInput").value = "";
+  document.getElementById("suggestionsBox").style.display = "none";
+}
+
+function showSuggestions() {
+  const input = document.getElementById("searchInput").value.toLowerCase();
+  const box = document.getElementById("suggestionsBox");
+  if (!input) {
+    box.style.display = "none";
+    return;
+  }
+
+  const matches = suggestions.filter(item => item.toLowerCase().includes(input));
+
+  if (matches.length === 0) {
+    box.innerHTML = `<div class="no-result">No result found</div>`;
+  } else {
+    box.innerHTML = matches.map(m => `<div onclick="scrollToQuery('${m}')">${m}</div>`).join("");
+  }
+
+  box.style.display = "block";
+}
+
+function scrollToQuery(term) {
+  const queryLinks = {
+    "file query": "file.html",
+    "file a query": "file.html",
+    "submit a query": "file.html",
+    "ask a question": "file.html",
+    "raise a concern": "file.html",
+    "get help": "file.html",
+    "submit issue": "file.html",
+    "file complaint": "file.html",
+    "need support": "file.html",
+    "register query": "file.html",
+    "contact support": "file.html",
+    "report issue": "file.html",
+    "i want to file a query": "file.html",
+    "how to ask a question?": "file.html",
+    "submit my banking issue": "file.html",
+    "need to file a query": "file.html",
+    "where can i ask my query?": "file.html",
+    "raise banking question": "file.html",
+    "resolve my issue": "file.html",
+    "loan query form": "file.html",
+    "account problem form": "file.html",
+    "i need help": "file.html",
+    "form to submit query": "file.html",
+    "i want to complain": "file.html",
+    "support form": "file.html",
+    "common query":"query.html",
+    "kyc": "query.html?category=kyc",
+    "accounts": "query.html?category=accounts",
+    "debit cards": "query.html?category=atm",
+    "government scheme": "query.html?category=govt",
+    "loans": "query.html?category=loans",
+    "atm": "query.html?category=atm",
+    "netbanking": "query.html?category=netbanking",
+    
+
+  };
+
+  const target = queryLinks[term.toLowerCase()];
+  if (target) {
+    window.location.href = target;
+  } else {
+    alert("No matching query section found.");
+  }
+
+  clearSearch();
+}
+
+// ✅ Add this to support Enter key press
+document.getElementById("searchInput").addEventListener("keydown", function (e) {
+  if (e.key === "Enter") {
+    const input = this.value.trim().toLowerCase();
+    const matched = suggestions.find(item => item.toLowerCase() === input);
+    
+    if (matched) {
+      scrollToQuery(matched);
+    } else {
+      const box = document.getElementById("suggestionsBox");
+      box.innerHTML = `<div class="no-result">No result found</div>`;
+      box.style.display = "block";
+    }
+  }
+});
+
+function toggleMenu() {
+  const menu = document.getElementById("mobileMenu");
+  if (menu.innerHTML === "") {
+    menu.innerHTML = `
+      <a href="index.html">Home</a>
+      <a href="file.html">File a Query</a>
+      <a href="query.html">Common Queries</a>
+      <a href="contact.html">Contact</a>`
+      ;
+  } else {
+    menu.innerHTML = "";
+  }
+}
+
+//form
+ const scriptURL = 'https://script.google.com/macros/s/AKfycbwpADmfzJCxbUh5ErZTKDwdW-rq5uP7A1OI6Zwo-_ZsjJSyqoXdjvcNlf7ONlJ32VNe/exec';
+  const form = document.getElementById("queryForm");
+  const message = document.getElementById("responseMessage");
+
+  form.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const fullName = form.fullName.value.trim();
+    const email = form.email.value.trim();
+    const mobileNumber = "+91" + form.mobileNumber.value.trim();
+    const queryType = form.queryType.value;
+    const subject = form.subject.value.trim();
+    const queryMessage = form.message.value.trim();
+    const timestamp = new Date().toLocaleString();
+
+    if (!/^[0-9]{10}$/.test(form.mobileNumber.value)) {
+      message.textContent = "Please enter a valid 10-digit mobile number.";
+      message.style.color = "orange";
+      return;
+    }
+
+    const data = new FormData();
+    data.append("Full Name", fullName);
+    data.append("Email", email);
+    data.append("Mobile Number", mobileNumber);
+    data.append("Query Category", queryType);
+    data.append("Subject", subject);
+    data.append("Message", queryMessage);
+    data.append("Timestamp", timestamp);
+
+    fetch(scriptURL, { method: 'POST', body: data })
+      .then(response => {
+        message.style.color = "lightgreen";
+        message.textContent = "Your query has been submitted successfully!";
+        form.reset();
+
+        // Optional: Save to localStorage for field dashboard
+        const queries = JSON.parse(localStorage.getItem("queries")) || [];
+        queries.push({
+          fullName, email, mobileNumber, queryType, subject, queryMessage, timestamp
+        });
+        localStorage.setItem("queries", JSON.stringify(queries));
+      })
+      .catch(error => {
+        message.style.color = "red";
+        message.textContent = "Error submitting query. Please try again later.";
+        console.error('Error!', error.message);
+      });
+  });
+
+  </script>
+</body>
+</html>
